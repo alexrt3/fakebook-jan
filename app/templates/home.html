@@ -10,6 +10,24 @@
         {% endif %}
     </h3>
     <hr>
+
+    <form action="{{ url_for('blog.create_post') }}" method="POST">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="input-group">
+                        <input type="text" name="status_update" class="form-control" placeholder="What's on your mind?" />
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="input-group">
+                        <input type="submit" class="btn btn-primary" value="Post" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <ul class="list-group">
         {% for p in posts %}
             <li class="list-group-item">

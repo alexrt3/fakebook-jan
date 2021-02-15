@@ -1,5 +1,8 @@
-from app import app, db
-from app.models import User, Post
+from app import db, create_app
+from app.blueprints.auth.models import User
+from app.blueprints.blog.models import  Post
+
+app = create_app()
 
 @app.shell_context_processor
 def make_shell_context():
