@@ -21,8 +21,8 @@ class Post(db.Model):
     body = db.Column(db.Text)
     date_created = db.Column(db.DateTime, nullable=False, default=dt.utcnow)
     date_updated = db.Column(db.DateTime, nullable=True)
-    user_id = db.Column(db.ForeignKey('user.id'))
+    user_id = db.Column(db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f'<Post: ID: [{self.id}] {self.title}>'
+        return f'<Post: ID: [{self.id}] {self.body[10]}...>'
 

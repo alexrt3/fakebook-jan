@@ -20,7 +20,11 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     moment.init_app(app)
+
     login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message = 'You do not have access to this page. Login first, please!'
+    login_manager.login_message_category = 'warning'
 
     from app.blueprints.main import bp as main_bp
     app.register_blueprint(main_bp)
