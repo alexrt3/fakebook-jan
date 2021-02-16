@@ -7,10 +7,13 @@ from .import bp as main_bp
 
 @main_bp.route('/')
 def home():
+    if current_user.is_authenticated:
+        posts = current_user.followed_posts().all()
+    else:
+        posts = []
     context = {
         'user': current_user,
-        'posts': current_user.followed_posts().all()
-        # 'posts': Post.query.order_by(Post.date_created.desc()).all()
+        'posts': posts
     }
     return render_template('home.html', **context)
 

@@ -64,8 +64,8 @@ class User(UserMixin, db.Model):
     def create_password_hash(self, password):
         self.password = generate_password_hash(password)
 
-    def verify_password_hash(self, password):
-        return check_password_hash(password)
+    def verify_password_hash(self, password_to_verify):
+        return check_password_hash(self.password, password_to_verify)
 
     def save(self):
         self.create_password_hash(self.password)
