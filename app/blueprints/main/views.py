@@ -1,9 +1,10 @@
 from app import db
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from app.blueprints.auth.models import User
 from app.blueprints.blog.models import Post
 from flask_login import login_user, current_user, logout_user, login_required
 from .import bp as main_bp
+from .email import send_email
 
 @main_bp.route('/')
 def home():
@@ -25,8 +26,18 @@ def profile():
     }
     return render_template('profile.html', **context)
 
-@main_bp.route('/contact')
+@main_bp.route('/contact', methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':
+        form_data = {
+            'name': request.form['name'],
+            'email': request.form['email'],
+            'budget': request.form['budget'],
+            'message': request.form['message']
+        }
+        send_email(form_data)
+        flash('Thank you for your inquiry. We will contact you shortly!','primary')
+        return redirect(url_for('main.contact'))
     return render_template('contact.html')
 
 @main_bp.route('/explore')

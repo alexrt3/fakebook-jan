@@ -4,12 +4,14 @@ from flask_migrate import Migrate
 from flask_moment import Moment
 from config import Config
 from flask_login import LoginManager
+from flask_mail import Mail
 
 
 db = SQLAlchemy()
 migrate = Migrate()
 moment = Moment()
 login_manager = LoginManager()
+mail = Mail()
 
 
 # Application Factory Pattern
@@ -20,6 +22,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     moment.init_app(app)
+    mail.init_app(app)
 
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
@@ -36,7 +39,7 @@ def create_app(config_class=Config):
     app.register_blueprint(blog_bp)
 
     # Needs app context
-    # with app.app_context():
-    #     from app import views
+    with app.app_context():
+        from app.blueprints.main import email
 
     return app
