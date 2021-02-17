@@ -38,6 +38,12 @@ def create_app(config_class=Config):
     from app.blueprints.blog import bp as blog_bp
     app.register_blueprint(blog_bp)
 
+    from app.blueprints.shop import bp as shop_bp
+    app.register_blueprint(shop_bp)
+
+    from app.blueprints.api import bp as api_bp
+    app.register_blueprint(api_bp)
+
     # Needs app context
     with app.app_context():
         from app.blueprints.main import email
