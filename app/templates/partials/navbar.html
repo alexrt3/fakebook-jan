@@ -19,8 +19,19 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('main.explore') }}">Explore</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('shop.home') }}">Shop</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">Shop</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownId">
+                    <a class="dropdown-item" href="{{ url_for('shop.home') }}">Products</a>
+                    <a class="dropdown-item" href="{{ url_for('shop.cart') }}">
+                        Cart
+                        <span class="float-right">
+                            <span class="badge badge-secondary bg-lg">{{ cart['items']|length }}</span>
+                        </span>
+                    </a>
+                    <a class="dropdown-item" href="#">Checkout</a>
+                </div>
             </li>
             {% endif %}
         </ul>

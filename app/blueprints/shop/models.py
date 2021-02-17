@@ -8,12 +8,7 @@ class Product(db.Model):
     price = db.Column(db.Float)
     tax = db.Column(db.Float)
     date_created = db.Column(db.DateTime, default=dt.utcnow)
-
-    # def __init__(self, name, description, price, tax):
-    #     self.name = name
-    #     self.description = description
-    #     self.price = price
-    #     self.tax = tax
+    date_updated = db.Column(db.DateTime)
 
     def save(self):
         db.session.add(self)
@@ -27,6 +22,7 @@ class Product(db.Model):
             'price': self.price,
             'tax': self.tax,
             'date_created': self.date_created,
+            'date_updated': self.date_updated,
         }
         return data
 
@@ -34,7 +30,21 @@ class Product(db.Model):
         for field in ['name', 'description', 'price']:
             if field in data:
                 setattr(self, field, data[field])
-        self.tax = self.price * .06
+        self.tax = round(self.price * .06, 2)
 
     def __repr__(self):
         return f'{self.name} @{self.price}'
+
+class Cart(db.Model):
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    user_id = db.Column(db.ForeignKey('user.id'), nullable=False)
+    product_id = db.Column(db.ForeignKey('product.id'), nullable=False)
+    date_added = db.Column(db.DateTime, default=dt.utcnow)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        from app.blueprints.auth.models import User
+        return f'<Cart: {User.query.get(self.user_id).email}: {Product.query.get(self.product_id).name}>'

@@ -47,5 +47,6 @@ def create_app(config_class=Config):
     # Needs app context
     with app.app_context():
         from app.blueprints.main import email
+        from .import context_processors
 
     return app
