@@ -9,7 +9,10 @@ def display_cart_info():
         return {
                 'cart': {
                     'items': [],
-                    'display_cart': []
+                    'display_cart': [],
+                    'tax': float(0.00),
+                    'subtotal': float(0.00),
+                    'grand_total': float(0.00),
                 } 
             }
     else:
