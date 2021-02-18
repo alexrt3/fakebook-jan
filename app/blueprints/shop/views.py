@@ -2,6 +2,7 @@ from .import bp as shop_bp
 from flask import render_template, redirect, url_for, flash, request
 from app.blueprints.shop.models import Product, Cart
 from flask_login import current_user
+from app import db
 
 @shop_bp.route('/')
 def home():
@@ -27,3 +28,20 @@ def add_product():
 def cart():
     context = {}
     return render_template('shop/cart.html', **context)
+
+@shop_bp.route('/cart/delete')
+def delete_product():
+    p = Product.query.get(request.args.get('product_id'))
+    cart = current_user.cart
+    for i in cart:
+        if i.product_id == p.id and current_user.id == i.user_id:
+            cart_item = Cart.query.filter_by(user_id=current_user.id).first()
+            db.session.delete(cart_item)
+    db.session.commit()
+    flash(f'Product deleted', 'info')
+    return redirect(url_for('shop.cart'))
+
+@shop_bp.route('/checkout')
+def checkout():
+    context = {}
+    return render_template('shop/checkout.html', **context)

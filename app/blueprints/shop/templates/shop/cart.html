@@ -20,6 +20,7 @@
                     <th>Description</th>
                     <th>Price</th>
                     <th>Quantity</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,8 +30,50 @@
                             <td>{{ p['description'] }}</td>
                             <td>{{ p['price'] }}</td>
                             <td>{{ p['quantity'] }}</td>
+                            <td>
+                                <a href="{{ url_for('shop.delete_product', product_id=p.product_id) }}" class="btn btn-danger">
+                                    Delete 
+                                    <span>
+                                        <i class="fa fa-trash"></i>
+                                    </span>
+                                    <!-- <i class="fas fa-trash-alt    "></i> -->
+                                </a>
+                            </td>
                         </tr>
-                    {% endfor %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="3"></td>
+                            <td>
+                                <strong>Subtotal</strong>
+                            </td>
+                            <td>
+                                <strong>${{ '{:.2f}'.format(cart['subtotal']) }}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td>
+                                <strong>Tax</strong>
+                            </td>
+                            <td>
+                                <strong>${{ '{:.2f}'.format(cart['tax']) }}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td>
+                                <strong>Grand Total</strong>
+                            </td>
+                            <td>
+                                <strong>${{ '{:.2f}'.format(cart['grand_total']) }}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>
+                                <a href="{{ url_for('shop.checkout') }}" class="btn btn-success">Checkout</a>
+                            </td>
+                        </tr>
                 </tbody>
         </table>
     </div>

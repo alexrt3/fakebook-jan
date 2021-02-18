@@ -30,6 +30,7 @@ class User(UserMixin, db.Model):
         backref=db.backref('followers', lazy='dynamic'),
         lazy='dynamic'
     )
+    cart = db.relationship('Cart', cascade='all, delete-orphan', backref='user', lazy=True)
 
     def __init__(self, first_name, last_name, password):
         super().__init__()
