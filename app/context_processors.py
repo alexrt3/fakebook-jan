@@ -3,6 +3,7 @@ from flask_login import current_user
 from app.blueprints.shop.models import Cart, Product
 from functools import reduce
 
+
 @app.context_processor
 def display_cart_info():
     if not current_user.is_authenticated:
@@ -33,6 +34,7 @@ def display_cart_info():
                     }
                 else:
                     cart_list[p.id]['quantity'] += 1
+        print(cart_list)
         return {
                 'cart': {
                     'items': cart,
