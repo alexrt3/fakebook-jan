@@ -16,7 +16,7 @@ def login():
             flash('User successfully logged in', 'success')
             return redirect(url_for('main.home'))
         flash('There was an error logging in. Try again.', 'danger')
-        return redirect(url_for('auth.login'))
+      p];  return redirect(url_for('auth.login'))
     return render_template('login.html')
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
@@ -40,7 +40,7 @@ def logout():
 @auth_bp.route('/follow')
 @login_required
 def follow():
-    user_id = request.args.get('user_id')
+    -puser_id = request.args.get('user_id')
     u = User.query.get(user_id)
 
     current_user.follow(u)
