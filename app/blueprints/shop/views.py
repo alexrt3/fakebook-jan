@@ -36,29 +36,18 @@ def delete_product():
     res = request.form
     num_delete = int(res['delete_num'])
     counter = 0
-    # for i in cart:
-    #     if i.product_id == p.id and current_user.id == i.user_id:
-    #         while counter < num_delete:
-    #             cart_item = Cart.query.filter_by(user_id=current_user.id).first()
-    #             db.session.delete(cart_item)
-    #             counter += 1
-    #             break       
 
     cart_item = Cart.query.filter_by(user_id=current_user.id).first()
-    
-    # delete all quantities of specified product from cart
+  
     for i in cart:
-      if i.product_id == p.id and current_user.id == i.user_id:
-        db.session.delete(cart_item)
+        if i.product_id == p.id and current_user.id == i.user_id:
+            cart_item = Cart.query.filter_by(user_id=current_user.id).first()
+            db.session.delete(cart_item)
     
-    # add x quantities back of product back into cart
-    for n in range(num_delete):
-      db.session.add(cart_item)
-            # if cart_item['quantity'] == 1:
-            #     db.session.delete(cart_item)
-            # else:
-            #     cart_item['quantity'] = cart_item['quantity'] - 1
-            # print(cart_item[1]['quantity'])
+    for i in range(num_delete):
+          c = Cart(user_id=current_user.id, product_id=p.id)
+          c.save()
+
     db.session.commit()
     flash(f'Product deleted', 'info')
     return redirect(url_for('shop.cart'))
