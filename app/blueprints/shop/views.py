@@ -49,7 +49,7 @@ def delete_product():
           c.save()
 
     db.session.commit()
-    flash(f'Product deleted', 'info')
+    flash(f'Product Updated', 'info')
     return redirect(url_for('shop.cart'))
 
 @shop_bp.route('/checkout')
