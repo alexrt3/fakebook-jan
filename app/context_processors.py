@@ -6,7 +6,7 @@ from functools import reduce
 
 @app.context_processor
 def display_cart_info():
-    if not current_user.is_authenticated:
+    if not current_user.is_authenticated or not Cart.query.all():
         return {
                 'cart': {
                     'items': [],
